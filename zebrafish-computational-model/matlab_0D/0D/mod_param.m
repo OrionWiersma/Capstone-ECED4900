@@ -23,6 +23,7 @@ p.Cao = 1.8;           % mM
 
 % Parameters for IKr
 p.GKr = 0.7776;        % mS/microF
+%p.GKr = 0.1;        % mS/microF
 
 % Parameters for IKs
 p.pKNa = 0.03; 
