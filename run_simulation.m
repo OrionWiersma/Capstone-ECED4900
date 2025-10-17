@@ -9,7 +9,7 @@ function run_simulation(BCL, nrepeat, protocol, ICfile)
 %   ICfile   - Initial condition file (default: [])
 
     if nargin < 1, BCL = 500; end
-    if nargin < 2, nrepeat = 50; end
+    if nargin < 2, nrepeat = 500; end
     if nargin < 3, protocol = 0; end
     if nargin < 4, ICfile = []; end
     

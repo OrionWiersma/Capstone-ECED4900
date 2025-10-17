@@ -22,7 +22,6 @@ function results = cardiac_sim_engine(parameters, initial_states, config)
     results.t = t_beat;
     results.STATES = STATES_beat;
     results.V = STATES_beat(:, 1);
-    results.Cai = STATES_beat(:, 2);
     results.APD = metrics.APD;
     results.final_states = STATES_beat(end, :);
 end
@@ -31,21 +30,9 @@ function CONSTANTS = apply_parameter_scaling(parameters)
     % Get base constants
     CONSTANTS = mod_param();
     
-    % Apply scaling
+    % Apply scaling (only IKr)
     if isfield(parameters, 'IKr_scale')
         CONSTANTS.GKr = CONSTANTS.GKr * parameters.IKr_scale;
-    end
-    if isfield(parameters, 'ICaL_scale')
-        CONSTANTS.GCaL = CONSTANTS.GCaL * parameters.ICaL_scale;
-    end
-    if isfield(parameters, 'INa_scale')
-        CONSTANTS.GNa = CONSTANTS.GNa * parameters.INa_scale;
-    end
-    if isfield(parameters, 'IKs_scale')
-        CONSTANTS.GKs = CONSTANTS.GKs * parameters.IKs_scale;
-    end
-    if isfield(parameters, 'Irel_scale')
-        CONSTANTS.gIrel = CONSTANTS.gIrel * parameters.Irel_scale;
     end
 end
 
@@ -62,13 +49,13 @@ function metrics = calculate_beat_metrics(t, STATES)
     % Calculate APD90
     metrics.APD = calculate_APD(t, V);
     
-    % Calculate additional metrics if needed
+    % Calculate voltage metrics only
     metrics.V_max = max(V);
     metrics.V_min = min(V);
-    metrics.Cai_max = max(STATES(:, 2));
 end
 
 function apd = calculate_APD(t, V)
+    % Need to confirm this
     % Find APD at 90% repolarization
     V_max = max(V);
     V_min = min(V);

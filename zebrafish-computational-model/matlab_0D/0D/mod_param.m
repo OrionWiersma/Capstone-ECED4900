@@ -21,6 +21,10 @@ p.Ko = 4.85;           % mM
 p.Nao = 142.0;         % mM
 p.Cao = 1.8;           % mM
 
+% Parameters for HcKCR1 optogenetic K+ channel
+% place holder for actual opsin model
+p.GHcKCR1 = 0.0;        % mS/microF 
+
 % Parameters for IKr
 p.GKr = 0.7776;        % mS/microF
 %p.GKr = 0.1;        % mS/microF

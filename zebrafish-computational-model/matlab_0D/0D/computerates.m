@@ -24,7 +24,7 @@ V.fT   = X(17);          % fT
 dvdt = zeros(17,1);
 
 invRTF = 1.0/p.RTF;
-EK = p.RTF*log(p.Ko./V.Ki);
+EK = p.RTF*log(p.Ko./V.Ki); % Reversal potential for K+
 ENa = p.RTF*log(p.Nao./V.Nai);
 EKs = p.RTF*log((p.Ko + p.pKNa*p.Nao)./(V.Ki + p.pKNa*V.Nai));
 ECa = 0.5*p.RTF*log(p.Cao./V.Cai);
@@ -65,6 +65,10 @@ cur.INaK = p.PNaK*p.Ko*V.Nai.*rec_iNaK./denINaK;                               %
 cur.IpCa = p.GpCa*V.Cai./(p.KpCa + V.Cai);                                     % IpCa
 cur.IbCa = p.GbCa*(V.V-ECa);                                                   % IbCa
 
+% HcKCR1 optogenetic K+ channel current
+% Placeholder
+cur.IHcKCR1 = p.GHcKCR1*(V.V-EK);
+
 % Calculate the stimulus current, Istim
 amp = -52.0;
 duration = 1.0;
@@ -76,7 +80,7 @@ else
 end
 
 % Calculating total current
-IK = cur.IKr + cur.IKs + cur.IK1;
+IK = cur.IKr + cur.IKs + cur.IK1 + cur.IHcKCR1;  %Added placeholder HcKCR1 current to pottasium current
 INa = cur.INa + cur.IbNa + cur.INaK + cur.INaCa;
 ICa = cur.ICaL + cur.IbCa + cur.IpCa + cur.ICaT;
 dvdt(1) = -(IK + INa + ICa + Istim);
